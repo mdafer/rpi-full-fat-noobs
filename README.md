@@ -7,3 +7,7 @@ The link to the OS json file is hardcoded on line 11 ('https://downloads.raspber
 
 The list of chosen OS to download is hardcoded on line 12 (myList=[1,5,8,11,13])
 each number represents the index of the selected OS, to check all OS before selecting any, replace line 12 with: myList=[]
+
+The downloader also enables auto-resume by default and can detect whether server supports resume or not automatically.
+
+![alt tag](https://github.com/mdafer/rpi-full-fat-noobs/blob/master/in_action.jpg)
