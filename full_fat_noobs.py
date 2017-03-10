@@ -6,7 +6,7 @@ Part of the download function by PabloG
 v0.1
 '''
 
-import requests, urllib2, os,sys
+import requests, urllib2, os#,sys
 
 oses = requests.get('https://downloads.raspberrypi.org/os_list_v3.json')
 myList=[1,5,8,11,13]
@@ -28,15 +28,19 @@ def download(url, file_name= None, directory=None):
 	completereq = urllib2.Request(url, headers={'User-Agent' : "Raspberry Pi Full Fat Noobs"}) 
 	completeu = urllib2.urlopen(completereq)
 	completeFileSize = int(completeu.info().getheaders("Content-Length")[0])
+	print url
+	if completeFileSize == existSize:
+		print 'already downloaded: '+file_name
+		#sys.exit(0)
+		f.close()
+		return
 		
 	req = urllib2.Request(url, headers={'User-Agent' : "Raspberry Pi Full Fat Noobs",'Range': 'bytes=%d-' % (existSize, )}) 
 	u = urllib2.urlopen(req)
 	
 	meta = u.info()
 	file_size = int(meta.getheaders("Content-Length")[0])
-	if file_size == existSize:
-		print 'already downloaded'
-		sys.exit(0)
+	
 	if file_size+existSize!=completeFileSize:
 		print 'error resuming, redownloading now'
 		f = open(file_name, 'wb')
@@ -63,18 +67,18 @@ print "Raspberry Pi Full Fat Noobs here!";
 #print json.dumps(oses.json(), indent=4, separators=(',', ': '))
 
 osList = enumerate(oses.json()["os_list"])
-print "\nAvailable myos:"
+print "\nAvailable OS:"
 for (i, myos) in osList:
 	print i, myos['os_name']
 	
 osList = enumerate(oses.json()["os_list"])
-print "\n\nChosen myos:"
+print "\n\nChosen OS:"
 for (i, myos) in osList:
 	if i in myList:
 		print i, myos['os_name']
 		
 osList = enumerate(oses.json()["os_list"])
-print "\n\nChosen myos:"
+print "\n\nChosen OS:"
 for (i, myos) in osList:
 	if i in myList:
 		print i, myos['os_name']
