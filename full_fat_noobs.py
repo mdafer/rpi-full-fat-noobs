@@ -28,7 +28,7 @@ def download(url, file_name= None, directory=None):
 	completereq = urllib2.Request(url, headers={'User-Agent' : "Raspberry Pi Full Fat Noobs"}) 
 	completeu = urllib2.urlopen(completereq)
 	completeFileSize = int(completeu.info().getheaders("Content-Length")[0])
-	print url
+
 	if completeFileSize == existSize:
 		print 'already downloaded: '+file_name
 		#sys.exit(0)
@@ -47,7 +47,7 @@ def download(url, file_name= None, directory=None):
 		file_size = completeFileSize
 		existSize = 0
 		
-	print "Downloading: %s Bytes: %s" % (file_name, file_size)
+	print "Downloading: %s Bytes To Download: %s Total: %s" % (file_name, file_size, completeFileSize)
 
 	block_sz = 8192
 	while True:
@@ -82,10 +82,15 @@ print "\n\nChosen OS:"
 for (i, myos) in osList:
 	if i in myList:
 		print i, myos['os_name']
-		download(myos['icon'],None,myos['os_name'])
-		download(myos['partition_setup'],None,myos['os_name'])
-		download(myos['partitions_info'],None,myos['os_name'])
-		download(myos['os_info'],None,myos['os_name'])
+		if myos['icon']:
+			download(myos['icon'],None,myos['os_name'])
+		if myos['partition_setup']:
+			download(myos['partition_setup'],None,myos['os_name'])
+		if myos['partitions_info']:
+			download(myos['partitions_info'],None,myos['os_name'])
+		if myos['os_info']:
+			download(myos['os_info'],None,myos['os_name'])
 		for (tarball) in myos['tarballs']:
-			download(tarball,None,myos['os_name'])
+			if tarball:
+				download(tarball,None,myos['os_name'])
 		
