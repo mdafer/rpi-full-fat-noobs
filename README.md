@@ -1,5 +1,5 @@
 # rpi-full-fat-noobs
-Add any Raspberry Pi Noobs OS to the offline installer
+With RPi Full Fat Noobs you can add any Raspberry Pi Noobs OS to the offline installer
 
 This is a simple python 2.7 script that downloads all necessary files of selected additional OS to Noobs for offline installation.
 
