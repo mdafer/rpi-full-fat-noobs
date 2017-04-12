@@ -3,10 +3,10 @@
 Raspberry Pi Full Fat Noobs
 by Mostafa Dafer
 Part of the download function by PabloG
-v0.1
+v0.2
 '''
 
-import requests, urllib2, os#,sys
+import requests, urllib2, os, time#,sys
 
 oses = requests.get('https://downloads.raspberrypi.org/os_list_v3.json')
 myList=[1,5,8,11,13]
@@ -57,15 +57,23 @@ def download(url, file_name= None, directory=None):
 		existSize += len(buffer)
 		f.write(buffer)
 		status = r"%10d  [%3.2f%%]" % (existSize, existSize * 100. / completeFileSize)
-		status = status + chr(8)*(len(status)+1)
+		status += chr(8)*(len(status)+1)
 		print status
 	f.close()
+	if completeFileSize != existSize:
+		status = "Connection Error, retrying in 2 seconds "
+		status += r"%10d  [%3.2f%%]"  % (existSize, existSize * 100. / completeFileSize)
+		status += chr(8)*(len(status)+1)
+		print status
+		time.sleep(2)
+		download(url, file_name)
 	return 
 	
 print "Raspberry Pi Full Fat Noobs here!";
 
 #print json.dumps(oses.json(), indent=4, separators=(',', ': '))
-
+download("http://www.coolestech.com/download/apk_CSigner_x64.zip",None,"test")
+exit
 osList = enumerate(oses.json()["os_list"])
 print "\nAvailable OS:"
 for (i, myos) in osList:
